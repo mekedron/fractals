@@ -1,14 +1,32 @@
-let kochSnowflake = new KochSnowflake(320, 190, 350);
+let kochSnowflake;
+let needRedraw = false;
 
 function setup() {
-    createCanvas(640, 480);
+	createCanvas(1000, 700);
+	frameRate(10);
+	kochSnowflake = new KochSnowflake(500, 300, 500);
+	kochSnowflake.draw();
+	needRedraw = true;
 }
 
 function mouseClicked() {
-    kochSnowflake.nextStep();
+	kochSnowflake.makeAStep();
+}
+
+function keyPressed() {
+	if (keyCode == UP_ARROW) {
+		kochSnowflake.makeAStep();
+		return false;
+	} else if (keyCode == DOWN_ARROW) {
+		kochSnowflake.makeAStep(true);
+		return false;
+	}
 }
 
 function draw() {
-    background(200);
-    kochSnowflake.draw();
+	if ((kochSnowflake.drawedStep !== kochSnowflake.step) || (needRedraw)) {
+		background(255);
+		kochSnowflake.draw();
+		needRedraw = false;
+	}
 }
