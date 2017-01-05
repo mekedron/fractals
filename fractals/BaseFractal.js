@@ -11,17 +11,18 @@ class BaseFractal {
 	 * @param  {float}  scl - Масштаб
 	 */
 	constructor(x, y, scl) {
-		this.x = x;
-		this.y = y;
-		this.scl = scl;
-		this.step = 0;
-		this.drawedStep = -1;
+		this.x = x
+		this.y = y
+		this.scl = scl
+		this.step = 0
+		this.drawedStep = -1
 	}
 
 	/**
 	 * Следующий шаг
 	 * @abstract
 	 * @param  {bool}  reversed  - Шаг в обратную сторону
+	 * @return {bool}  maked
 	 */
 	makeAStep(reversed) {}
 

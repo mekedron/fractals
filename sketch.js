@@ -1,32 +1,27 @@
-let kochSnowflake;
-let needRedraw = false;
+let fractal
 
 function setup() {
-	createCanvas(1000, 700);
-	frameRate(10);
-	kochSnowflake = new KochSnowflake(500, 300, 500);
-	kochSnowflake.draw();
-	needRedraw = true;
+	createCanvas(1000, 700)
+	noLoop()
+	fractal = new LevyCCurve(500, 400, 800)
 }
 
 function mouseClicked() {
-	kochSnowflake.makeAStep();
+	if (fractal.makeAStep())
+		redraw()
 }
 
 function keyPressed() {
 	if (keyCode == UP_ARROW) {
-		kochSnowflake.makeAStep();
-		return false;
+		if (fractal.makeAStep())
+			redraw()
 	} else if (keyCode == DOWN_ARROW) {
-		kochSnowflake.makeAStep(true);
-		return false;
+		if (fractal.makeAStep(true))
+			redraw()
 	}
 }
 
 function draw() {
-	if ((kochSnowflake.drawedStep !== kochSnowflake.step) || (needRedraw)) {
-		background(255);
-		kochSnowflake.draw();
-		needRedraw = false;
-	}
+	background(255)
+	fractal.draw()
 }
