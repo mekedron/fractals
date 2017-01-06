@@ -110,7 +110,8 @@ $('#prevStep').click(prevStep)
 $('#nextStep').click(nextStep)
 $('#goToStep').click(goToStep)
 
-function nextStep() {
+function nextStep(e) {
+	if (e) e.preventDefault()
 	let nextStep = parseInt($('#step').val())
 	if (nextStep > fractal.limit)
 			return
@@ -120,7 +121,8 @@ function nextStep() {
 	}
 }
 
-function prevStep() {
+function prevStep(e) {
+	if (e) e.preventDefault()
 	let nextStep = parseInt($('#step').val()) - 1
 	nextStep = (nextStep > 0) ? nextStep : 1
 	$('#step').val(nextStep)
@@ -130,7 +132,8 @@ function prevStep() {
 	redraw()
 }
 
-function goToStep() {
+function goToStep(e) {
+	if (e) e.preventDefault()
 	let nextStep = parseInt($('#step').val())
 	fractal.goToStep(nextStep)
 	$('#step').val(fractal.step.toString())
