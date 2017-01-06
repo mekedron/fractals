@@ -4,7 +4,7 @@ Some functions and code modified version from http://www.jeffreythompson.org/col
 GNU LGPL 2.1 License
 Version 0.1 | January 10th, 2016
 */
-console.log("### p5.collide ###")
+// console.log("### p5.collide ###")
 
 p5.prototype._collideDebug = false;
 

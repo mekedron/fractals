@@ -8,20 +8,26 @@ class PythagorasTree extends BaseFractal {
   constructor(x, y, scl) {
     super(x, y, scl)
 
-    let realScl = floor(scl / 10)
-    let e = createVector(x, y)
-    let f = createVector(x, y - realScl)
+    this.limit = 14
+  }
 
-    this.realScl = realScl
-    this.els = [new PythagorSquare(e, f)]
-
-    this.limit = 10
+  doFirstStep() {
     this.step = 1
+
+    let realScl = floor(this.scl / 10)
+    let e = createVector(0, this.y)
+    let f = createVector(0, this.y - realScl)
+    
+    this.els = [new PythagorasSquare(e, f)]
   }
 
   makeAStep(reversed) {
+    if (!this.step) {
+      this.doFirstStep()
+      return true
+    }
     if (this.step > this.limit) 
-      return
+      return false
     reversed = reversed || false
     this.step++
     let next = []
@@ -58,23 +64,25 @@ class PythagorasTree extends BaseFractal {
       let f2 = el.F.copy().sub(e2).mult(-3).add(el.F)
       point(f2.x, f2.y)
 
-      next.push(new PythagorSquare(e1, f1))
-      next.push(new PythagorSquare(e2, f2))
+      next.push(new PythagorasSquare(e1, f1))
+      next.push(new PythagorasSquare(e2, f2))
     }
     this.els = next
+    return true
   }
 
   draw() {
-    stroke(0)
+    stroke(1)
     noFill()
+    let xOffset = this.x / 1.5
     for (let i = 0; i < this.els.length; i++) {
       let el = this.els[i]
       beginShape()
-      vertex(el.A.x, el.A.y)
-      vertex(el.B.x, el.B.y)
-      vertex(el.C.x, el.C.y)
-      vertex(el.D.x, el.D.y)
-      vertex(el.A.x, el.A.y)
+      vertex(xOffset + el.A.x, el.A.y)
+      vertex(xOffset + el.B.x, el.B.y)
+      vertex(xOffset + el.C.x, el.C.y)
+      vertex(xOffset + el.D.x, el.D.y)
+      vertex(xOffset + el.A.x, el.A.y)
       //vertex(el.E.x, el.E.y)
       //vertex(el.F.x, el.F.y)
       endShape(CLOSE)
@@ -82,7 +90,7 @@ class PythagorasTree extends BaseFractal {
   }
 }
 
-class PythagorSquare {
+class PythagorasSquare {
   /**
    * @constructor
    * @param  {p5.Vector}  start  - Точка начала

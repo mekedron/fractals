@@ -8,18 +8,25 @@ class TSquare extends BaseFractal {
 	constructor(x, y, scl) {
 		super(x, y, scl)
 
-		let halfOfScl = floor(scl / 6)
-		let a = createVector(x - halfOfScl, y - halfOfScl)
-		let c = createVector(x + halfOfScl, y + halfOfScl)
+		this.limit = 6
+	}
+
+	doFirstStep() {
+		this.step = 1
+
+		let halfOfScl = floor(this.scl / 6)
+		let a = createVector(-halfOfScl, this.y - halfOfScl)
+		let c = createVector(halfOfScl, this.y + halfOfScl)
 
 		this.halfOfScl = halfOfScl
 		this.squares = [new TElement(a, c)]
-
-		this.limit = 5
-		this.step = 1
 	}
 
 	makeAStep(reversed) {
+		if (!this.step) {
+			this.doFirstStep()
+			return true
+		}
 		if (this.step > this.limit) 
 			return false
 		reversed = reversed || false
@@ -54,15 +61,18 @@ class TSquare extends BaseFractal {
 	}
 
 	draw() {
+    console.log('drawing TSquare')
+    noStroke()
 		fill(0)
+		let xOffset = this.x / 1.5
 		for (let i = 0; i < this.squares.length; i++) {
 			let square = this.squares[i]
 			beginShape()
-			vertex(square.A.x, square.A.y)
-			vertex(square.B.x, square.B.y)
-			vertex(square.C.x, square.C.y)
-			vertex(square.D.x, square.D.y)
-			vertex(square.A.x, square.A.y)
+			vertex(xOffset + square.A.x, square.A.y)
+			vertex(xOffset + square.B.x, square.B.y)
+			vertex(xOffset + square.C.x, square.C.y)
+			vertex(xOffset + square.D.x, square.D.y)
+			vertex(xOffset + square.A.x, square.A.y)
 			endShape(CLOSE)
 		}
 	}

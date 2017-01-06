@@ -8,18 +8,25 @@ class SierpinskiTriangle extends BaseFractal {
 	constructor(x, y, scl) {
 		super(x, y, scl)
 
-		let halfOfScl = floor(scl / 2)
-		let a = createVector(x - halfOfScl, y + halfOfScl)
-		let c = createVector(x + halfOfScl, y + halfOfScl)
+		this.limit = 9
+	}
+
+	doFirstStep() {
+		this.step = 1
+
+		let halfOfScl = floor(this.scl / 2)
+		let a = createVector(-halfOfScl, this.y + halfOfScl)
+		let c = createVector(halfOfScl, this.y + halfOfScl)
 
 		this.halfOfScl = halfOfScl
-		this.triangles = [new TElement(a, c)]
-
-		this.limit = 5
-		this.step = 1
+		this.triangles = [new STriangle(a, c)]
 	}
 
 	makeAStep(reversed) {
+		if (!this.step) {
+			this.doFirstStep()
+			return true
+		}
 		if (this.step > this.limit) 
 			return false
 		reversed = reversed || false
@@ -33,35 +40,37 @@ class SierpinskiTriangle extends BaseFractal {
 			
 			a = triangle.A
 			c = triangle.D
-			next.push(new TElement(a, c))
+			next.push(new STriangle(a, c))
 			
 			a = triangle.E
 			c = triangle.F
-			next.push(new TElement(a, c))
+			next.push(new STriangle(a, c))
 
 			a = triangle.D
 			c = triangle.C
-			next.push(new TElement(a, c))
+			next.push(new STriangle(a, c))
 		}
 		this.triangles = next
 		return true
 	}
 
 	draw() {
+    console.log('drawing SierpinskiTriangle')
 		fill(0)
-		noStroke
+		noStroke()
+		let xOffset = this.x / 1.5
 		for (let i = 0; i < this.triangles.length; i++) {
 			let triangle = this.triangles[i]
 			beginShape()
-			vertex(triangle.A.x, triangle.A.y)
-			vertex(triangle.B.x, triangle.B.y)
-			vertex(triangle.C.x, triangle.C.y)
+			vertex(xOffset + triangle.A.x, triangle.A.y)
+			vertex(xOffset + triangle.B.x, triangle.B.y)
+			vertex(xOffset + triangle.C.x, triangle.C.y)
 			endShape(CLOSE)
 		}
 	}
 }
 
-class TElement {
+class STriangle {
 	/**
 	 * @constructor
 	 * @param  {p5.Vector}  start  - Точка начала

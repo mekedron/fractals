@@ -8,18 +8,26 @@ class HFractal extends BaseFractal {
 	constructor(x, y, scl) {
 		super(x, y, scl)
 
-		let halfOfScl = floor(scl / 6)
-		let a = createVector(x - halfOfScl, y - halfOfScl)
-		let c = createVector(x + halfOfScl, y + halfOfScl)
+		this.limit = 6
+	}
+
+	doFirstStep() {
+		this.step = 1
+
+		let halfOfScl = floor(this.scl / 6)
+		let a = createVector(-halfOfScl, this.y - halfOfScl)
+		let c = createVector(halfOfScl, this.y + halfOfScl)
 
 		this.halfOfScl = halfOfScl
 		this.elements = [new HElement(a, c)]
 
-		this.limit = 5
-		this.step = 1
 	}
 
 	makeAStep(reversed) {
+		if (!this.step) {
+			this.doFirstStep()
+			return true
+		}
 		if (this.step > this.limit) 
 			return false
 		reversed = reversed || false
@@ -54,19 +62,22 @@ class HFractal extends BaseFractal {
 	}
 
 	draw() {
+    console.log('drawing HFractal')
+    stroke(1)
 		fill(0)
+		let xOffset = this.x / 1.5
 		for (let i = 0; i < this.elements.length; i++) {
 			let element = this.elements[i]
 			beginShape(LINES)
 			
-			vertex(element.A.x, element.A.y)
-			vertex(element.D.x, element.D.y)
+			vertex(xOffset + element.A.x, element.A.y)
+			vertex(xOffset + element.D.x, element.D.y)
 
-			vertex(element.B.x, element.B.y)
-			vertex(element.C.x, element.C.y)
+			vertex(xOffset + element.B.x, element.B.y)
+			vertex(xOffset + element.C.x, element.C.y)
 
-			vertex(element.E.x, element.E.y)
-			vertex(element.F.x, element.F.y)
+			vertex(xOffset + element.E.x, element.E.y)
+			vertex(xOffset + element.F.x, element.F.y)
 
 			endShape(CLOSE)
 		}

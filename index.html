@@ -2,18 +2,69 @@
 <html>
   <head>
     <meta charset="utf8">
+
+    <link   href="stuff/bootstrap.min.css" rel="stylesheet">
+    <link   href="stuff/styles.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+
+      <!-- The justified navigation menu is meant for single line per list item.
+           Multiple lines will require custom code not provided by Bootstrap. -->
+      <div class="masthead">
+        <h3 class="text-muted">Фракталы</h3>
+        <nobr>
+          <nav>
+            <ul class="nav nav-justified">
+            </ul>
+          </nav>
+        </nobr>
+      </div>
+
+      <!-- Example row of columns -->
+      <form class="form-inline" style="padding: 25px 0px 20px">
+        <div class="form-group" id="prevStep">
+          <button type="submit" class="btn btn-primary">-</button>
+        </div>
+        <div class="form-group" id="nextStep">
+          <button type="submit" class="btn btn-primary">+</button>
+        </div>
+        <div class="form-group">
+          <label for="step" class="sr-only">Шаг</label>
+          <input id="step" class="form-control" placeholder="Шаг" type="number" value="1">
+        </div>
+        <button type="submit" class="btn btn-primary" id="goToStep">Построить</button>
+      </form>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron" id="canvas">
+        
+      </div>
+
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>Дратути))</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <script src="stuff/jquery.min.js"></script>
+    <script src="stuff/tether.min.js"></script>
+    <script src="stuff/bootstrap.min.js"></script>
+
+
     <script src="p5.min.js"></script>
     <script src="p5.dom.min.js"></script>
     <script src="p5.collide2d.js"></script>
     <script src="fractals/BaseFractal.js"></script>
     <script src="fractals/KochSnowflake.js"></script>
+    <script src="fractals/TSquare.js"></script>
     <script src="fractals/HFractal.js"></script>
     <script src="fractals/SierpinskiTriangle.js"></script>
     <script src="fractals/PythagorasTree.js"></script>
     <script src="fractals/LevyCCurve.js"></script>
+    <script src="fractals/Dragon.js"></script>
     <script src="sketch.js"></script>
-  </head>
-  <body>
-
   </body>
 </html>
