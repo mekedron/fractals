@@ -91,7 +91,7 @@ class LevyCLine {
   get B() {
     let c = this.start.copy()
     let v = p5.Vector.sub(this.end, this.start)
-    v.div(sin(radians(336))  * (- 1) + 1)
+    v.div(sin(radians(335.5))  * (- 1) + 1)
     v.rotate(-radians(45))
     return c.add(v)
   }

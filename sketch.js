@@ -91,8 +91,6 @@ function setup() {
 		})
 		controls.fractalButtons.push()
 	})
-	// controls.nextStep = createButton('Драути', offset.x, offset.y)
-	// fractal = new LevyCCurve(500, 400, 800)
 }
 
 function draw() {
